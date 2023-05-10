@@ -50,6 +50,10 @@ router_bgp:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65199'
       description: borderleaf2-DC1_Ethernet4
+    192.168.99.1:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DCI
+      remote_as: '65000'
     192.168.101.5:
       peer_group: EVPN-OVERLAY-PEERS
       description: borderleaf1-DC1

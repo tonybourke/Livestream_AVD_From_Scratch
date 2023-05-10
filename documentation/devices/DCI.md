@@ -22,6 +22,8 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
+- [BFD](#bfd)
+  - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
 - [Filters](#filters)
   - [Prefix-lists](#prefix-lists)
@@ -274,6 +276,18 @@ ip route 0.0.0.0/0 192.168.0.1
 
 ### Router BGP Peer Groups
 
+#### EVPN-OVERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| Next-hop unchanged | True |
+| Source | Loopback0 |
+| BFD | True |
+| Ebgp multihop | 15 |
+| Send community | all |
+| Maximum routes | 0 (no limit) |
+
 #### IPv4-UNDERLAY-PEERS
 
 | Settings | Value |
@@ -290,6 +304,20 @@ ip route 0.0.0.0/0 192.168.0.1
 | 192.168.90.2 | 65199 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
 | 192.168.90.4 | 65299 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
 | 192.168.90.6 | 65299 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.101.11 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.12 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.101.13 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.201.11 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.201.12 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.201.13 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+
+### Router BGP EVPN Address Family
+
+#### EVPN Peer Groups
+
+| Peer Group | Activate |
+| ---------- | -------- |
+| EVPN-OVERLAY-PEERS | True |
 
 ### Router BGP Device Configuration
 
@@ -298,6 +326,13 @@ ip route 0.0.0.0/0 192.168.0.1
 router bgp 65000
    router-id 192.168.99.1
    maximum-paths 4 ecmp 4
+   neighbor EVPN-OVERLAY-PEERS peer group
+   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
+   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor EVPN-OVERLAY-PEERS bfd
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 15
+   neighbor EVPN-OVERLAY-PEERS send-community
+   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
@@ -313,10 +348,50 @@ router bgp 65000
    neighbor 192.168.90.6 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.90.6 remote-as 65299
    neighbor 192.168.90.6 description borderleaf2-DC2
+   neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.101.11 remote-as 65100
+   neighbor 192.168.101.11 description spine1-DC1
+   neighbor 192.168.101.12 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.101.12 remote-as 65100
+   neighbor 192.168.101.12 description spine2-DC1
+   neighbor 192.168.101.13 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.101.13 remote-as 65100
+   neighbor 192.168.101.13 description spine3-DC1
+   neighbor 192.168.201.11 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.201.11 remote-as 65200
+   neighbor 192.168.201.11 description spine1-DC2
+   neighbor 192.168.201.12 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.201.12 remote-as 65200
+   neighbor 192.168.201.12 description spine2-DC2
+   neighbor 192.168.201.13 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.201.13 remote-as 65200
+   neighbor 192.168.201.13 description spine3-DC2
    redistribute connected route-map RM-CONN-2-BGP
    !
+   address-family evpn
+      neighbor EVPN-OVERLAY-PEERS activate
+   !
    address-family ipv4
+      no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+```
+
+# BFD
+
+## Router BFD
+
+### Router BFD Multihop Summary
+
+| Interval | Minimum RX | Multiplier |
+| -------- | ---------- | ---------- |
+| 300 | 300 | 3 |
+
+### Router BFD Device Configuration
+
+```eos
+!
+router bfd
+   multihop interval 300 min-rx 300 multiplier 3
 ```
 
 # Multicast

@@ -316,6 +316,7 @@ ip route 0.0.0.0/0 192.168.0.1
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- |
+| 192.168.99.1 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 | 192.168.101.1 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 | 192.168.101.2 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 | 192.168.101.3 | 65103 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
@@ -354,6 +355,9 @@ router bgp 65100
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 192.168.99.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.99.1 remote-as 65000
+   neighbor 192.168.99.1 description DCI
    neighbor 192.168.101.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.101.1 remote-as 65101
    neighbor 192.168.101.1 description leaf1-DC1
