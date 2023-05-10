@@ -1,0 +1,93 @@
+---
+CVP_DEVICES:
+  - fqdn: borderleaf1-DC1
+    parentContainerName: DC1_LEAFS
+    configlets:
+      - AVD_borderleaf1-DC1
+  - fqdn: borderleaf1-DC2
+    parentContainerName: DC2_LEAFS
+    configlets:
+      - AVD_borderleaf1-DC2
+  - fqdn: borderleaf2-DC1
+    parentContainerName: DC1_LEAFS
+    configlets:
+      - AVD_borderleaf2-DC1
+  - fqdn: borderleaf2-DC2
+    parentContainerName: DC2_LEAFS
+    configlets:
+      - AVD_borderleaf2-DC2
+  - fqdn: leaf1-DC1
+    parentContainerName: DC1_LEAFS
+    configlets:
+      - AVD_leaf1-DC1
+  - fqdn: leaf1-DC2
+    parentContainerName: DC2_LEAFS
+    configlets:
+      - AVD_leaf1-DC2
+  - fqdn: leaf2-DC1
+    parentContainerName: DC1_LEAFS
+    configlets:
+      - AVD_leaf2-DC1
+  - fqdn: leaf2-DC2
+    parentContainerName: DC2_LEAFS
+    configlets:
+      - AVD_leaf2-DC2
+  - fqdn: leaf3-DC1
+    parentContainerName: DC1_LEAFS
+    configlets:
+      - AVD_leaf3-DC1
+  - fqdn: leaf3-DC2
+    parentContainerName: DC2_LEAFS
+    configlets:
+      - AVD_leaf3-DC2
+  - fqdn: leaf4-DC1
+    parentContainerName: DC1_LEAFS
+    configlets:
+      - AVD_leaf4-DC1
+  - fqdn: leaf4-DC2
+    parentContainerName: DC2_LEAFS
+    configlets:
+      - AVD_leaf4-DC2
+  - fqdn: spine1-DC1
+    parentContainerName: DC1_SPINES
+    configlets:
+      - AVD_spine1-DC1
+  - fqdn: spine1-DC2
+    parentContainerName: DC2_SPINES
+    configlets:
+      - AVD_spine1-DC2
+  - fqdn: spine2-DC1
+    parentContainerName: DC1_SPINES
+    configlets:
+      - AVD_spine2-DC1
+  - fqdn: spine2-DC2
+    parentContainerName: DC2_SPINES
+    configlets:
+      - AVD_spine2-DC2
+  - fqdn: spine3-DC1
+    parentContainerName: DC1_SPINES
+    configlets:
+      - AVD_spine3-DC1
+  - fqdn: spine3-DC2
+    parentContainerName: DC2_SPINES
+    configlets:
+      - AVD_spine3-DC2
+CVP_CONTAINERS:
+  DC1:
+    parentContainerName: FABRIC
+  DC1_LEAFS:
+    parentContainerName: DC1
+  DC1_SPINES:
+    parentContainerName: DC1
+  DC2:
+    parentContainerName: FABRIC
+  DC2_LEAFS:
+    parentContainerName: DC2
+  DC2_SPINES:
+    parentContainerName: DC2
+  DCI:
+    parentContainerName: FABRIC
+  FABRIC:
+    parentContainerName: Tenant
+  hosts:
+    parentContainerName: FABRIC

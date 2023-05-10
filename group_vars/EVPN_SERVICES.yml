@@ -1,0 +1,30 @@
+---
+tenants:
+  Red:
+    mac_vrf_vni_base: 10000
+    vrfs:
+      Red_1:
+        vrf_vni: 10
+        svis:
+          10:
+            name: DMZ
+            enabled: true
+            ip_address_virtual: 10.1.10.1/24
+          20:
+            name: Internal
+            enabled: true
+            ip_address_virtual: 10.1.20.1/24
+  Blue:
+    mac_vrf_vni_base: 20000
+    vrfs:
+      Blue_1:
+        vrf_vni: 20
+        svis:
+          100:
+            name: DMZ
+            enabled: true
+            ip_address_virtual: 10.1.100.1/24
+          200:
+            name: Internal
+            enabled: true
+            ip_address_virtual: 10.1.200.1/24

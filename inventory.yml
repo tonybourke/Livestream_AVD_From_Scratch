@@ -1,0 +1,96 @@
+---
+all:
+  children:
+    CVP_cluster:
+      hosts:
+        cvp1:
+          ansible_httpapi_host: 192.168.0.5
+          ansible_host: 192.168.0.5
+          ansible_user: arista
+          ansible_password: arista6cua
+          ansible_connection: httpapi
+          ansible_httpapi_use_ssl: True
+          ansible_httpapi_validate_certs: False
+          ansible_network_os: eos
+          ansible_httpapi_port: 443
+    FABRIC:
+      vars:
+        ansible_user: arista
+        ansible_password: arista6cua
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: True
+        ansible_httpapi_validate_certs: False
+        ansible_network_os: eos
+        ansible_httpapi_port: 443
+        ansible_become: yes
+        ansible_become_method: enable
+      children:
+        DCI:
+          vars: super-spine
+        hosts: 
+          DCI:
+            ansible_host: 192.168.0.75
+        DC1:
+          children:
+            DC1_SPINES:
+              vars:
+                type: spine
+              hosts: 
+                spine1-DC1:
+                  ansible_host: 192.168.0.11
+                spine2-DC1:
+                  ansible_host: 192.168.0.12
+                spine3-DC1:
+                  ansible_host: 192.168.0.13
+            DC1_LEAFS:
+              vars:
+                type: l3leaf
+              hosts:
+                leaf1-DC1:
+                  ansible_host: 192.168.0.21
+                leaf2-DC1:
+                  ansible_host: 192.168.0.22
+                leaf3-DC1:
+                  ansible_host: 192.168.0.23
+                leaf4-DC1:
+                  ansible_host: 192.168.0.24
+                borderleaf1-DC1:
+                  ansible_host: 192.168.0.25
+                borderleaf2-DC1:
+                  ansible_host: 192.168.0.26
+        DC2:
+          children:
+            DC2_SPINES:
+              vars:
+                type: spine
+              hosts:
+                spine1-DC2:
+                  ansible_host: 192.168.0.14
+                spine2-DC2:
+                  ansible_host: 192.168.0.15
+                spine3-DC2:
+                  ansible_host: 192.168.0.16
+            DC2_LEAFS:
+              vars: 
+                type: l3leaf
+              hosts:
+                leaf1-DC2:
+                  ansible_host: 192.168.0.31
+                leaf2-DC2:
+                  ansible_host: 192.168.0.32
+                leaf3-DC2:
+                  ansible_host: 192.168.0.33
+                leaf4-DC2:
+                  ansible_host: 192.168.0.34
+                borderleaf1-DC2:
+                  ansible_host: 192.168.0.35
+                borderleaf2-DC2:
+                  ansible_host: 192.168.0.36
+    EVPN_SERVICES:
+      children: 
+        DC1_LEAFS:
+        DC2_LEAFS:
+    ENDPOINT_CONNECTION:
+      children: 
+        DC1_LEAFS:
+        DC2_LEAFS:      

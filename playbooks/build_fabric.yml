@@ -1,0 +1,10 @@
+---
+- name: Build fabric configuration
+  hosts: FABRIC
+  tasks:
+    - name: Generate AVD structured configs and fabric documentation
+      import_role:
+        name: arista.avd.eos_designs
+    - name: Build EOS syntax from structure configs
+      import_role:
+        name: arista.avd.eos_cli_config_gen

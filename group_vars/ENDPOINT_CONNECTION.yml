@@ -1,0 +1,50 @@
+---
+servers:
+  host1-DC1:
+    adapters:
+    - type: server
+      server_ports: [nic1, nic2, nic3, nic4]
+      switch_ports: [Ethernet6, Ethernet7, Ethernet6, Ethernet7]
+      switches: [leaf1-DC1, leaf1-DC1, leaf2-DC1, leaf2-DC1 ]
+      vlans: 10
+      mode: access
+      spanning_tree_portfast: edge
+      port_channel:
+        description: PortChannel to host1-DC1
+        mode: active
+  host2-DC1:
+    adapters:
+    - type: server
+      server_ports: [ Ethernet1, Ethernet2, Ethernet3, Ethernet4] # This is mostly for descriptions
+      switch_ports: [ Ethernet6, Ethernet7, Ethernet6, Ethernet7 ] # This is required for the port channel
+      switches: [ leaf3-DC1, leaf3-DC1, leaf4-DC1, leaf4-DC1 ]
+      vlans: 100 # If it's a trunk port, you can list VLANs here or use a profile
+      mode: access # access or trunk
+      spanning_tree_portfast: edge # Generally you'll want portfast for hosts/hypervisors
+      port_channel:
+        description: PortChannel host2-DC1
+        mode: active # active for LACP, on for static port channel
+  host1-DC2:
+    adapters:
+    - type: server
+      server_ports: [ Ethernet1, Ethernet2, Ethernet3, Ethernet4]
+      switch_ports: [ Ethernet6, Ethernet7, Ethernet6, Ethernet7 ]
+      switches: [ leaf1-DC2, leaf1-DC2, leaf2-DC2, leaf2-DC2 ]
+      vlans: 20
+      mode: access
+      spanning_tree_portfast: edge
+      port_channel:
+        description: PortChannel host2-DC1
+        mode: active
+  host2-DC2:
+    adapters:
+    - type: server
+      server_ports: [ Ethernet1, Ethernet2, Ethernet3, Ethernet4] # This is mostly for descriptions
+      switch_ports: [ Ethernet6, Ethernet7, Ethernet6, Ethernet7 ] # This is required for the port channel
+      switches: [ leaf3-DC2, leaf3-DC2, leaf4-DC2, leaf4-DC2 ]
+      vlans: 200 # If it's a trunk port, you can list VLANs here or use a profile
+      mode: access # access or trunk
+      spanning_tree_portfast: edge # Generally you'll want portfast for hosts/hypervisors
+      port_channel:
+        description: PortChannel host2
+        mode: active # active for LACP, on for static port channel

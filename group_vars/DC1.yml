@@ -1,0 +1,71 @@
+---
+spine:
+  defaults:
+    bgp_as: 65100
+    loopback_ipv4_pool: 192.168.101.0/24
+    bgp_default:
+      - 'no bgp default ipv4-unicast'
+      - 'distance bgp 20 200 200'
+    mlag: false
+  nodes:
+    spine1-DC1:
+      id: 11
+      mgmt_ip: 192.168.0.11/24
+    spine2-DC1:
+      id: 12
+      mgmt_ip: 192.168.0.12/24
+    spine3-DC1:
+      id: 13
+      mgmt_ip: 192.168.0.13/24
+
+l3leaf:
+  defaults:
+    bgp_as: 65101-65190
+    loopback_ipv4_pool: 192.168.101.0/24
+    vtep_loopback_ipv4_pool: 192.168.102.0/24
+    uplink_ipv4_pool: 192.168.103.0/24
+    uplink_interfaces: [Ethernet3, Ethernet4, Ethernet5]
+    uplink_switches: [spine1-DC1, spine2-DC1, spine3-DC1]
+    mlag: true
+    mlag_interfaces: [Ethernet1, Ethernet2]
+    mlag_peer_ipv4_pool: 192.168.90.0/24
+    mlag_peer_l3_ipv4_pool: 192.168.91.0/24
+    virtual_router_mac_address: 00:1C:73:00:00:99
+    bgp_defaults:
+      - 'no bgp default ipv4-unicast'
+      - 'distance bgp 20 200 200'
+    spanning_tree_mode: mstp # Spanning Tree is still enabled even in EVPN setups
+    spanning_tree_priority: 16384 
+
+  node_groups:
+    dc1_mlag1:
+      nodes:
+        leaf1-DC1:  
+          id: 1
+          mgmt_ip: 192.168.0.21/24
+          uplink_switch_interfaces: [Ethernet2, Ethernet2, Ethernet2]
+        leaf2-DC1:
+          id: 2
+          mgmt_ip: 192.168.0.22/24
+          uplink_switch_interfaces: [Ethernet3, Ethernet3, Ethernet3]          
+    dc1_mlag2:
+      nodes:
+        leaf3-DC1:
+          id: 3
+          mgmt_ip: 192.168.0.23/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4, Ethernet4]
+        leaf4-DC1:
+          id: 4
+          mgmt_ip: 192.168.0.24/24
+          uplink_switch_interfaces: [Ethernet5, Ethernet5, Ethernet5]
+    dc1_mlag3:
+      bgp_as: 65199
+      nodes:
+        borderleaf1-DC1:
+          id: 5
+          mgmt_ip: 192.168.0.25/24
+          uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6]
+        borderleaf2-DC1:
+          id: 6
+          mgmt_ip: 192.168.0.26/24
+          uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7]
