@@ -247,6 +247,7 @@ vlan 4094
 | Ethernet3 | P2P_LINK_TO_SPINE1-DC2_Ethernet6 | routed | - | 192.168.203.25/31 | default | 1550 | False | - | - |
 | Ethernet4 | P2P_LINK_TO_SPINE2-DC2_Ethernet6 | routed | - | 192.168.203.27/31 | default | 1550 | False | - | - |
 | Ethernet5 | P2P_LINK_TO_SPINE3-DC2_Ethernet6 | routed | - | 192.168.203.29/31 | default | 1550 | False | - | - |
+| Ethernet12 | P2P_LINK_TO_DCI_Ethernet3 | routed | - | 192.168.90.4/31 | default | 1550 | False | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -282,6 +283,13 @@ interface Ethernet5
    mtu 1550
    no switchport
    ip address 192.168.203.29/31
+!
+interface Ethernet12
+   description P2P_LINK_TO_DCI_Ethernet3
+   no shutdown
+   mtu 1550
+   no switchport
+   ip address 192.168.90.4/31
 ```
 
 ## Port-Channel Interfaces
@@ -562,7 +570,7 @@ ip route 0.0.0.0/0 192.168.0.1
 | Address Family | evpn |
 | Source | Loopback0 |
 | BFD | True |
-| Ebgp multihop | 3 |
+| Ebgp multihop | 15 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
@@ -588,6 +596,7 @@ ip route 0.0.0.0/0 192.168.0.1
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- |
+| 192.168.90.5 | 65000 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
 | 192.168.94.9 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
 | 192.168.201.11 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 | 192.168.201.12 | 65200 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
@@ -634,7 +643,7 @@ router bgp 65299
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 15
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
@@ -647,6 +656,9 @@ router bgp 65299
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
+   neighbor 192.168.90.5 peer group IPv4-UNDERLAY-PEERS
+   neighbor 192.168.90.5 remote-as 65000
+   neighbor 192.168.90.5 description DCI
    neighbor 192.168.94.9 peer group MLAG-IPv4-UNDERLAY-PEER
    neighbor 192.168.94.9 description borderleaf2-DC2
    neighbor 192.168.201.11 peer group EVPN-OVERLAY-PEERS

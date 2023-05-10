@@ -7,6 +7,7 @@ spine:
       - 'no bgp default ipv4-unicast'
       - 'distance bgp 20 200 200'
     mlag: false
+    evpn_route_servers: [DCI]
   nodes:
     spine1-DC1:
       id: 11
@@ -17,6 +18,9 @@ spine:
     spine3-DC1:
       id: 13
       mgmt_ip: 192.168.0.13/24
+    DCI:
+      id: 19
+      mgmt_ip: 192.168.0.76/24
 
 l3leaf:
   defaults:

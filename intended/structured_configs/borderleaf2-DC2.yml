@@ -24,7 +24,7 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
+      ebgp_multihop: '15'
       send_community: all
       maximum_routes: 0
   address_family_ipv4:
@@ -63,6 +63,10 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine3-DC2
       remote_as: '65200'
+    192.168.90.7:
+      remote_as: '65000'
+      description: DCI
+      peer_group: IPv4-UNDERLAY-PEERS
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -299,6 +303,15 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.203.35/31
+  Ethernet12:
+    peer: DCI
+    peer_interface: Etherne4
+    peer_type: super-spine
+    description: P2P_LINK_TO_DCI_Etherne4
+    type: routed
+    shutdown: false
+    mtu: 1550
+    ip_address: 192.168.90.6/31
 mlag_configuration:
   domain_id: dc2_mlag3
   local_interface: Vlan4094

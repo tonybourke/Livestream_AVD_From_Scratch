@@ -8,6 +8,7 @@ spine:
       - 'no bgp default ipv4-unicast'
       - 'distance bgp 20 200 200'
     mlag: false
+    evpn_route_servers: [DCI]
   nodes:
     spine1-DC2:
       id: 11
@@ -70,9 +71,7 @@ l3leaf:
           id: 5
           mgmt_ip: 192.168.0.35/24
           uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6]
-          evpn_route_servers: [spine1-DC2, spine2-DC2, spine3-DC2, DCI]
         borderleaf2-DC2:
           id: 6
           mgmt_ip: 192.168.0.36/24
           uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7]
-          evpn_route_servers: [spine1-DC2, spine2-DC2, spine3-DC2, DCI]

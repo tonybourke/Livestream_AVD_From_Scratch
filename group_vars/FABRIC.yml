@@ -9,3 +9,33 @@ mgmt_interface: Management0
 mgmt_interface_vrf: default
 mgmt_gateway: 192.168.0.1
 
+evpn_ebgp_multihop: 15
+
+l3_edge:
+  p2p_links_ip_pools: 
+    dci_ips: 192.168.90.0/24
+  p2p_links:
+    - id: 1
+      ip_pool: dci_ips
+      nodes: [borderleaf1-DC1, DCI]
+      interfaces: [Ethernet12, Ethernet1]
+      as: [65199, 65000]
+      include_in_underlay_protocol: true
+    - id: 2
+      ip_pool: dci_ips
+      nodes: [borderleaf2-DC1, DCI]
+      interfaces: [Ethernet12, Ethernet2]
+      as: [65199, 65000]
+      include_in_underlay_protocol: true
+    - id: 3
+      ip_pool: dci_ips
+      nodes: [borderleaf1-DC2, DCI]
+      interfaces: [Ethernet12, Ethernet3]
+      as: [65299, 65000]
+      include_in_underlay_protocol: true
+    - id: 4
+      ip_pool: dci_ips
+      nodes: [borderleaf2-DC2, DCI]
+      interfaces: [Ethernet12, Etherne4]
+      as: [65299, 65000]
+      include_in_underlay_protocol: true

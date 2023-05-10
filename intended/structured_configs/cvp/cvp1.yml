@@ -16,6 +16,10 @@ CVP_DEVICES:
     parentContainerName: DC2_LEAFS
     configlets:
       - AVD_borderleaf2-DC2
+  - fqdn: DCI
+    parentContainerName: DCI
+    configlets:
+      - AVD_DCI
   - fqdn: leaf1-DC1
     parentContainerName: DC1_LEAFS
     configlets:
@@ -89,5 +93,3 @@ CVP_CONTAINERS:
     parentContainerName: FABRIC
   FABRIC:
     parentContainerName: Tenant
-  hosts:
-    parentContainerName: FABRIC

@@ -21,6 +21,7 @@
 | FABRIC | l3leaf | borderleaf1-DC2 | 192.168.0.35/24 | - | Provisioned |
 | FABRIC | l3leaf | borderleaf2-DC1 | 192.168.0.26/24 | - | Provisioned |
 | FABRIC | l3leaf | borderleaf2-DC2 | 192.168.0.36/24 | - | Provisioned |
+| FABRIC | super-spine | DCI | 192.168.0.76/24 | - | Provisioned |
 | FABRIC | l3leaf | leaf1-DC1 | 192.168.0.21/24 | - | Provisioned |
 | FABRIC | l3leaf | leaf1-DC2 | 192.168.0.31/24 | - | Provisioned |
 | FABRIC | l3leaf | leaf2-DC1 | 192.168.0.22/24 | - | Provisioned |
@@ -51,17 +52,21 @@
 | l3leaf | borderleaf1-DC1 | Ethernet3 | spine | spine1-DC1 | Ethernet6 |
 | l3leaf | borderleaf1-DC1 | Ethernet4 | spine | spine2-DC1 | Ethernet6 |
 | l3leaf | borderleaf1-DC1 | Ethernet5 | spine | spine3-DC1 | Ethernet6 |
+| l3leaf | borderleaf1-DC1 | Ethernet12 | super-spine | DCI | Ethernet1 |
 | l3leaf | borderleaf1-DC2 | Ethernet1 | mlag_peer | borderleaf2-DC2 | Ethernet1 |
 | l3leaf | borderleaf1-DC2 | Ethernet2 | mlag_peer | borderleaf2-DC2 | Ethernet2 |
 | l3leaf | borderleaf1-DC2 | Ethernet3 | spine | spine1-DC2 | Ethernet6 |
 | l3leaf | borderleaf1-DC2 | Ethernet4 | spine | spine2-DC2 | Ethernet6 |
 | l3leaf | borderleaf1-DC2 | Ethernet5 | spine | spine3-DC2 | Ethernet6 |
+| l3leaf | borderleaf1-DC2 | Ethernet12 | super-spine | DCI | Ethernet3 |
 | l3leaf | borderleaf2-DC1 | Ethernet3 | spine | spine1-DC1 | Ethernet7 |
 | l3leaf | borderleaf2-DC1 | Ethernet4 | spine | spine2-DC1 | Ethernet7 |
 | l3leaf | borderleaf2-DC1 | Ethernet5 | spine | spine3-DC1 | Ethernet7 |
+| l3leaf | borderleaf2-DC1 | Ethernet12 | super-spine | DCI | Ethernet2 |
 | l3leaf | borderleaf2-DC2 | Ethernet3 | spine | spine1-DC2 | Ethernet7 |
 | l3leaf | borderleaf2-DC2 | Ethernet4 | spine | spine2-DC2 | Ethernet7 |
 | l3leaf | borderleaf2-DC2 | Ethernet5 | spine | spine3-DC2 | Ethernet7 |
+| l3leaf | borderleaf2-DC2 | Ethernet12 | super-spine | DCI | Etherne4 |
 | l3leaf | leaf1-DC1 | Ethernet1 | mlag_peer | leaf2-DC1 | Ethernet1 |
 | l3leaf | leaf1-DC1 | Ethernet2 | mlag_peer | leaf2-DC1 | Ethernet2 |
 | l3leaf | leaf1-DC1 | Ethernet3 | spine | spine1-DC1 | Ethernet2 |
@@ -111,15 +116,19 @@
 | borderleaf1-DC1 | Ethernet3 | 192.168.103.25/31 | spine1-DC1 | Ethernet6 | 192.168.103.24/31 |
 | borderleaf1-DC1 | Ethernet4 | 192.168.103.27/31 | spine2-DC1 | Ethernet6 | 192.168.103.26/31 |
 | borderleaf1-DC1 | Ethernet5 | 192.168.103.29/31 | spine3-DC1 | Ethernet6 | 192.168.103.28/31 |
+| borderleaf1-DC1 | Ethernet12 | 192.168.90.0/31 | DCI | Ethernet1 | 192.168.90.1/31 |
 | borderleaf1-DC2 | Ethernet3 | 192.168.203.25/31 | spine1-DC2 | Ethernet6 | 192.168.203.24/31 |
 | borderleaf1-DC2 | Ethernet4 | 192.168.203.27/31 | spine2-DC2 | Ethernet6 | 192.168.203.26/31 |
 | borderleaf1-DC2 | Ethernet5 | 192.168.203.29/31 | spine3-DC2 | Ethernet6 | 192.168.203.28/31 |
+| borderleaf1-DC2 | Ethernet12 | 192.168.90.4/31 | DCI | Ethernet3 | 192.168.90.5/31 |
 | borderleaf2-DC1 | Ethernet3 | 192.168.103.31/31 | spine1-DC1 | Ethernet7 | 192.168.103.30/31 |
 | borderleaf2-DC1 | Ethernet4 | 192.168.103.33/31 | spine2-DC1 | Ethernet7 | 192.168.103.32/31 |
 | borderleaf2-DC1 | Ethernet5 | 192.168.103.35/31 | spine3-DC1 | Ethernet7 | 192.168.103.34/31 |
+| borderleaf2-DC1 | Ethernet12 | 192.168.90.2/31 | DCI | Ethernet2 | 192.168.90.3/31 |
 | borderleaf2-DC2 | Ethernet3 | 192.168.203.31/31 | spine1-DC2 | Ethernet7 | 192.168.203.30/31 |
 | borderleaf2-DC2 | Ethernet4 | 192.168.203.33/31 | spine2-DC2 | Ethernet7 | 192.168.203.32/31 |
 | borderleaf2-DC2 | Ethernet5 | 192.168.203.35/31 | spine3-DC2 | Ethernet7 | 192.168.203.34/31 |
+| borderleaf2-DC2 | Ethernet12 | 192.168.90.6/31 | DCI | Etherne4 | 192.168.90.7/31 |
 | leaf1-DC1 | Ethernet3 | 192.168.103.1/31 | spine1-DC1 | Ethernet2 | 192.168.103.0/31 |
 | leaf1-DC1 | Ethernet4 | 192.168.103.3/31 | spine2-DC1 | Ethernet2 | 192.168.103.2/31 |
 | leaf1-DC1 | Ethernet5 | 192.168.103.5/31 | spine3-DC1 | Ethernet2 | 192.168.103.4/31 |
@@ -149,6 +158,7 @@
 
 | Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------- | ------------------- | ------------------ | ------------------ |
+| 192.168.99.0/24 | 256 | 1 | 0.4 % |
 | 192.168.101.0/24 | 256 | 9 | 3.52 % |
 | 192.168.201.0/24 | 256 | 9 | 3.52 % |
 
@@ -160,6 +170,7 @@
 | FABRIC | borderleaf1-DC2 | 192.168.201.5/32 |
 | FABRIC | borderleaf2-DC1 | 192.168.101.6/32 |
 | FABRIC | borderleaf2-DC2 | 192.168.201.6/32 |
+| FABRIC | DCI | 192.168.99.1/32 |
 | FABRIC | leaf1-DC1 | 192.168.101.1/32 |
 | FABRIC | leaf1-DC2 | 192.168.201.1/32 |
 | FABRIC | leaf2-DC1 | 192.168.101.2/32 |

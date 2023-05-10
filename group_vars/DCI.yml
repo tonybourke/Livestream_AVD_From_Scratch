@@ -1,0 +1,12 @@
+---
+super_spine:
+  defaults:
+    bgp_as: 65000
+    loopback_ipv4_pool: 192.168.99.0/24
+  nodes:
+    DCI:
+      id: 1
+      mgmt_ip: 192.168.0.76/24
+super_spine_bgp_defaults:
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
